@@ -1,0 +1,167 @@
+<div id="wrapper" class="ng-scope">
+    <div class="gray-bg">
+        <div class="wrapper wrapper-content">
+            <div ng-app="ngclickApp">
+                <div ng-controller="ngclickCtrl">
+                    <div class="row">
+                        <div class="col-lg-12" ng-init="getBooks();">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content mar-all">
+                                    <button class="btn btn-success float-right mar-button" type="submit" ng-click="addBookModelOpen();">Add New</button>
+									<h1 class="header">List of books</h1>
+
+                                    <div class="row mar-all" id="book">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="addBookModal" class="modal" tabindex="-1" role="dialog">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title">Add Book</h5>
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">&times;</span>
+			                    </button>
+			                </div>
+			                <div class="modal-body">
+								<form id="createForm" (ngSubmit)="createBook()" name="createBook">
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">ISBN</label>
+										<input class="form-control" formControlName="isbn" id="add_isbn">
+									</div>
+
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">Title</label>
+										<input class="form-control" formControlName="title" id="add_title">
+									</div>
+
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">Author</label>
+										<input class="form-control" formControlName="author" id="add_author">
+									</div>
+
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">Published Date</label>
+										<input type="date" class="form-control" formControlName="publish_date" id="add_publish_date">
+									</div>
+
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">Publisher</label>
+										<input class="form-control" formControlName="publisher" id="add_publisher">
+									</div>
+
+									<div class="form-group" [formGroup]="addForm">
+										<label for="exampleInputPassword1">Number Of Pages</label>
+										<input type="number" class="form-control" formControlName="numOfPages" id="add_numOfPages">
+									</div>
+
+									<button type="submit" class="btn btn-primary float-right">Submit</button>
+									<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right">Close</button>
+								</form>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+
+	            <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title">Edit Book</h5>
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">&times;</span>
+			                    </button>
+			                </div>
+			                <div class="modal-body">
+								<form id="editForm" (ngSubmit)="updateBook()">
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">ISBN</label>
+										<input class="form-control" formControlName="isbn" id="isbn">
+									</div>
+
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">Title</label>
+										<input class="form-control" formControlName="title" id="title">
+									</div>
+
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">Author</label>
+										<input class="form-control" formControlName="author" id="author">
+									</div>
+
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">Published Date</label>
+										<input type="date" class="form-control" formControlName="publish_date" id="publish_date">
+									</div>
+
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">Publisher</label>
+										<input class="form-control" formControlName="publisher" id="publisher">
+									</div>
+
+									<div class="form-group" [formGroup]="updateForm">
+										<label for="exampleInputPassword1">Number Of Pages</label>
+										<input type="number" class="form-control" formControlName="numOfPages" id="numOfPages">
+									</div>
+
+									<button type="submit" class="btn btn-primary float-right">Submit</button>
+									<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right">Close</button>
+								</form>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+
+			    <div id="getBookModal" class="modal" tabindex="-1" role="dialog">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title">Book Details</h5>
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">&times;</span>
+			                    </button>
+			                </div>
+			                <div class="modal-body">
+			                	<div class="form-group">
+			                		<b><label for="isbn">ISBN: </label></b>
+									<span id="isbn_get"></span>
+								</div>
+
+								<div class="form-group">
+									<b><label for="title">Title: </label></b>
+									<span id="title_get"></span>
+								</div>
+
+								<div class="form-group">
+									<b><label for="author">Author: </label></b>
+									<span id="author_get"></span>
+								</div>
+
+								<div class="form-group">
+									<b><label for="publish_date">Published Date: </label></b>
+									<span id="publish_date_get"></span>
+								</div>
+
+								<div class="form-group">
+									<b><label for="publisher">Publisher: </label></b>
+									<span id="publisher_get"></span>
+								</div>
+
+								<div class="form-group">
+									<b><label for="numOfPages_get">Number Of Pages: </label></b>
+									<span id="numOfPages_get"></span>
+								</div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>BookStore</title>
+	<base href="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<script src="assets/js/jquery-3.5.1.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+
+	<script src="assets/js/angular.js"></script>
+
+	<script type="text/javascript">
+		var app = angular.module('ngclickApp', []);
+		app.controller('ngclickCtrl', function ($scope, $http, $compile, $filter, $location, $window) {
+
+			$scope.books = [];
+			$scope.selected = 0;
+			$scope.url = "http://localhost:3001/";
+			$scope.baseURL = "http://localhost:4200/book";
+
+			$scope.getBooks = function (){
+				var url = $scope.url+"book";
+				$http.get(url).then(function(response){
+					var new_books = response.data.data;
+					angular.forEach(new_books, function (value, key) {
+						$scope.books.push({"id": value.id, "isbn": value.isbn, "title": value.title, "publisher": value.publisher, "numOfPages": value.numOfPages, "author": value.author});
+					});
+
+					angular.forEach($scope.books, function (value) {
+						if(value != undefined || value != '') {
+							// var Book_HTML = '<div class="row">'
+							var Book_HTML = '<div class="col-md-4 mar-bottom">'
+							   	Book_HTML += '<div class="card">'
+							    Book_HTML += '<div class="card-body">'
+								Book_HTML += '<h5 class="card-title">'+value.title+'</h5>'
+								Book_HTML += '<h6 class="card-subtitle mb-2 text-muted">'+value.isbn+'</h6>'
+								Book_HTML += '<div>Author: '+value.author+'</div>'
+								Book_HTML += '<div>Publisher: '+value.publisher+'</div>'
+								Book_HTML += '<div>Number Of Pages: '+value.numOfPages+'</div>'
+								Book_HTML += '<button types="button" class="btn btn-info mar-all" ng-click="getBookDetails(\''+value.id+'\');">View</button>'
+								Book_HTML += '<button types="button" class="btn btn-primary mar-all" ng-click="UpdateBookDetails(\''+value.id+'\');">Edit</button>'
+								Book_HTML += '<button type="button" class="btn btn-danger mar-all" ng-click="DeleteBookDetails(\''+value.id+'\');">Delete</button>'
+								Book_HTML += '</div>'
+								Book_HTML += '</div>'
+								Book_HTML += '</div>';
+								// Book_HTML += '</div>';
+							var $role = $(Book_HTML).appendTo('#book');
+							$compile($role)($scope);
+						} else {
+							var $user = $('<h1>No Data Found</h1>').appendTo('#book');
+							$compile($user)($scope);
+						}
+					});
+				});
+			}
+
+			$scope.getBookDetails = function (id){
+				$("#getBookModal").modal("show");
+				var url = $scope.url+"book/"+id;
+				$http.get(url).then(function(response){
+					var book_details = response.data.data;
+					if(book_details != undefined || book_details != '') {
+						var date_string = book_details.publish_date;
+						var publish_date = date_string.split('T')[0];
+						$("#isbn_get").html(book_details.isbn);
+						$("#title_get").html(book_details.title);
+						$("#author_get").html(book_details.author);
+						$("#publish_date_get").html(publish_date);
+						$("#publisher_get").html(book_details.publisher);
+						$("#numOfPages_get").html(book_details.numOfPages);
+					}
+				});
+			}
+
+			$scope.UpdateBookDetails = function (id){
+				$("#editBookModal").modal("show");
+				localStorage.setItem('id',id);
+				var url = $scope.url+"book/"+id;
+				$http.get(url).then(function(response){
+					var book_details = response.data.data;
+					console.log(book_details.publish_date);
+					if(book_details != undefined || book_details != '') {
+						var date_string = book_details.publish_date;
+						var publish_date = date_string.split('T')[0];
+						console.log(publishe_date);
+						$("#isbn").val(book_details.isbn);
+						$("#title").val(book_details.title);
+						$("#author").val(book_details.author);
+						$("#publish_date").attr("value",publish_date);
+						$("#publisher").val(book_details.publisher);
+						$("#numOfPages").val(book_details.numOfPages);
+					}
+				});
+			}
+
+			$scope.DeleteBookDetails = function (id){
+				var url = $scope.url+"book/"+id;
+				$http.delete(url).then(function(response){
+					var book_details = response.data.data;
+					if(book_details != undefined || book_details != '') {
+						$window.location.href = $scope.baseURL;
+					}
+				});
+			}
+
+			$scope.addBookModelOpen = function (){
+				$("#addBookModal").modal("show");
+			}
+
+      		$scope.editBookModelOpen = function (){
+				$("#editBookModal").modal("show");
+			}
+		});
+	</script>
+</head>
+<body>
+  <app-root></app-root>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/controllers.js"></script>
+  <script src="assets/js/directives.js"></script>
+  <script src="assets/js/translations.js"></script>
+</body>
+</html>
