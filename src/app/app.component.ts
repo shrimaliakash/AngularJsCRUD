@@ -14,7 +14,7 @@ export class AppComponent {
 
 	onSuccess(message) {
 		this.service.success('Success', message, {
-			timeOut: 2000,
+			timeOut: 1000,
 			animate: 'fade',
 			showProgressBar: true
 		});
@@ -22,7 +22,7 @@ export class AppComponent {
 
 	onError(message) {
 		this.service.error('Error', message, {
-			timeOut: 2000,
+			timeOut: 1000,
 			animate: 'fade',
 			showProgressBar: true
 		});

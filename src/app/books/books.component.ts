@@ -56,22 +56,22 @@ export class BooksComponent implements OnInit {
 			this.apiService.createBook(this.isbn, this.title, this.author, this.publish_date, this.publisher, this.numOfPages).subscribe(
 				(res) => res.success == false ? this.service.error('Error', res.message, {
 					position: ["top", "left"],
-					timeOut: 2000,
+					timeOut: 500,
 					animate: 'fade',
 					showProgressBar: true
-				}) 
-				: this.service.error('Success', res.message, {
+				}, this.router.navigateByUrl('/book')) 
+				: this.service.success('Success', res.message, {
 					position: ["top", "left"],
-					timeOut: 2000,
+					timeOut: 500,
 					animate: 'fade',
 					showProgressBar: true
-				}),
+				}, this.router.navigateByUrl('/book')),
 				(err) => this.service.error('Error', err.error.message, {
 					position: ["top", "left"],
-					timeOut: 2000,
+					timeOut: 1000,
 					animate: 'fade',
 					showProgressBar: true
-				})
+				}, this.router.navigateByUrl('/book'))
 			);
 		}
 	}
@@ -87,13 +87,18 @@ export class BooksComponent implements OnInit {
 			this.publisher = this.updateForm.controls.publisher.value;
 			this.numOfPages = this.updateForm.controls.numOfPages.value;
 			this.apiService.updateBook(this.isbn, this.title, this.author, this.publish_date, this.publisher, this.numOfPages).subscribe(
-				(res) => this.router.navigate(['/book']),
-				(err) => this.service.error('Error', err.error.message, {
+				(res) => this.service.success('Success', res.message, {
 					position: ["top", "left"],
-					timeOut: 2000,
+					timeOut: 500,
 					animate: 'fade',
 					showProgressBar: true
-				})
+				}, this.router.navigateByUrl('/book')),
+				(err) => this.service.error('Error', err.error.message, {
+					position: ["top", "left"],
+					timeOut: 500,
+					animate: 'fade',
+					showProgressBar: true
+				}, this.router.navigateByUrl('/book'))
 			);
 		}
 	}

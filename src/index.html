@@ -13,7 +13,16 @@
 
 	<script src="assets/js/angular.js"></script>
 
-	<script type="text/javascript">
+	
+</head>
+<body>
+  <app-root></app-root>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/controllers.js"></script>
+  <script src="assets/js/directives.js"></script>
+  <script src="assets/js/translations.js"></script>
+  <script type="text/javascript">
 		var app = angular.module('ngclickApp', []);
 		app.controller('ngclickCtrl', function ($scope, $http, $compile, $filter, $location, $window) {
 
@@ -32,7 +41,6 @@
 
 					angular.forEach($scope.books, function (value) {
 						if(value != undefined || value != '') {
-							// var Book_HTML = '<div class="row">'
 							var Book_HTML = '<div class="col-md-4 mar-bottom">'
 							   	Book_HTML += '<div class="card">'
 							    Book_HTML += '<div class="card-body">'
@@ -47,7 +55,6 @@
 								Book_HTML += '</div>'
 								Book_HTML += '</div>'
 								Book_HTML += '</div>';
-								// Book_HTML += '</div>';
 							var $role = $(Book_HTML).appendTo('#book');
 							$compile($role)($scope);
 						} else {
@@ -82,15 +89,13 @@
 				var url = $scope.url+"book/"+id;
 				$http.get(url).then(function(response){
 					var book_details = response.data.data;
-					console.log(book_details.publish_date);
+					console.log(response);
 					if(book_details != undefined || book_details != '') {
 						var date_string = book_details.publish_date;
-						var publish_date = date_string.split('T')[0];
-						console.log(publishe_date);
 						$("#isbn").val(book_details.isbn);
 						$("#title").val(book_details.title);
 						$("#author").val(book_details.author);
-						$("#publish_date").attr("value",publish_date);
+						$("#publish_date").attr("value",book_details.publish_date);
 						$("#publisher").val(book_details.publisher);
 						$("#numOfPages").val(book_details.numOfPages);
 					}
@@ -114,15 +119,11 @@
       		$scope.editBookModelOpen = function (){
 				$("#editBookModal").modal("show");
 			}
+
+			$scope.editBookModelClose = function (){
+				$("#editBookModal").modal("hide");
+			}
 		});
 	</script>
-</head>
-<body>
-  <app-root></app-root>
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/controllers.js"></script>
-  <script src="assets/js/directives.js"></script>
-  <script src="assets/js/translations.js"></script>
 </body>
 </html>
