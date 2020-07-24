@@ -12,111 +12,109 @@
 
                                     <div class="row mar-all" id="book">
                                     </div>
+
+					                <div id="addBookModal" class="modal" tabindex="-1" role="dialog">
+								        <div class="modal-dialog" role="document">
+								            <div class="modal-content">
+								                <div class="modal-header">
+								                    <h5 class="modal-title">Add Book</h5>
+								                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								                        <span aria-hidden="true">&times;</span>
+								                    </button>
+								                </div>
+								                <div class="modal-body">
+													<form id="createForm" (ngSubmit)="createBook()" name="createBook">
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">ISBN</label>
+															<input class="form-control" formControlName="isbn" id="add_isbn">
+														</div>
+
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">Title</label>
+															<input class="form-control" formControlName="title" id="add_title">
+														</div>
+
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">Author</label>
+															<input class="form-control" formControlName="author" id="add_author">
+														</div>
+
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">Published Date</label>
+															<input type="date" class="form-control" formControlName="publish_date" id="add_publish_date">
+														</div>
+
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">Publisher</label>
+															<input class="form-control" formControlName="publisher" id="add_publisher">
+														</div>
+
+														<div class="form-group" [formGroup]="addForm">
+															<label for="exampleInputPassword1">Number Of Pages</label>
+															<input type="number" class="form-control" formControlName="numOfPages" id="add_numOfPages">
+														</div>
+
+														<button type="submit" class="btn btn-primary float-right" ng-click="addBookModelClose();">Submit</button>
+														<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right" ng-click="addBookModelClose();">Close</button>
+													</form>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
+
+						            <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
+								        <div class="modal-dialog" role="document">
+								            <div class="modal-content">
+								                <div class="modal-header">
+								                    <h5 class="modal-title">Edit Book</h5>
+								                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								                        <span aria-hidden="true">&times;</span>
+								                    </button>
+								                </div>
+								                <div class="modal-body">
+													<form id="editForm" (ngSubmit)="updateBook()">
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">ISBN</label>
+															<input class="form-control" formControlName="isbn" id="isbn">
+														</div>
+
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">Title</label>
+															<input class="form-control" formControlName="title" id="title">
+														</div>
+
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">Author</label>
+															<input class="form-control" formControlName="author" id="author">
+														</div>
+
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">Published Date</label>
+															<input type="date" class="form-control" formControlName="publish_date" id="publish_date">
+														</div>
+
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">Publisher</label>
+															<input class="form-control" formControlName="publisher" id="publisher">
+														</div>
+
+														<div class="form-group" [formGroup]="updateForm">
+															<label for="exampleInputPassword1">Number Of Pages</label>
+															<input type="number" class="form-control" formControlName="numOfPages" id="numOfPages">
+														</div>
+
+														<button type="submit" class="btn btn-primary float-right" ng-click="editBookModelClose();">Submit</button>
+														<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right" ng-click="editBookModelClose();">Close</button>
+													</form>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-                <div id="addBookModal" class="modal" tabindex="-1" role="dialog">
-			        <div class="modal-dialog" role="document">
-			            <div class="modal-content">
-			                <div class="modal-header">
-			                    <h5 class="modal-title">Add Book</h5>
-			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			                        <span aria-hidden="true">&times;</span>
-			                    </button>
-			                </div>
-			                <div class="modal-body">
-								<form id="createForm" (ngSubmit)="createBook()" name="createBook">
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">ISBN</label>
-										<input class="form-control" formControlName="isbn" id="add_isbn">
-									</div>
-
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">Title</label>
-										<input class="form-control" formControlName="title" id="add_title">
-									</div>
-
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">Author</label>
-										<input class="form-control" formControlName="author" id="add_author">
-									</div>
-
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">Published Date</label>
-										<input type="date" class="form-control" formControlName="publish_date" id="add_publish_date">
-									</div>
-
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">Publisher</label>
-										<input class="form-control" formControlName="publisher" id="add_publisher">
-									</div>
-
-									<div class="form-group" [formGroup]="addForm">
-										<label for="exampleInputPassword1">Number Of Pages</label>
-										<input type="number" class="form-control" formControlName="numOfPages" id="add_numOfPages">
-									</div>
-
-									<button type="submit" class="btn btn-primary float-right">Submit</button>
-									<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right">Close</button>
-								</form>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-
-	            <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
-			        <div class="modal-dialog" role="document">
-			            <div class="modal-content">
-			                <div class="modal-header">
-			                    <h5 class="modal-title">Edit Book</h5>
-			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			                        <span aria-hidden="true">&times;</span>
-			                    </button>
-			                </div>
-			                <div class="modal-body">
-								<form id="editForm" (ngSubmit)="updateBook()">
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">ISBN</label>
-										<input class="form-control" formControlName="isbn" id="isbn">
-									</div>
-
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">Title</label>
-										<input class="form-control" formControlName="title" id="title">
-									</div>
-
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">Author</label>
-										<input class="form-control" formControlName="author" id="author">
-									</div>
-
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">Published Date</label>
-										<input type="date" class="form-control" formControlName="publish_date" id="publish_date">
-									</div>
-
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">Publisher</label>
-										<input class="form-control" formControlName="publisher" id="publisher">
-									</div>
-
-									<div class="form-group" [formGroup]="updateForm">
-										<label for="exampleInputPassword1">Number Of Pages</label>
-										<input type="number" class="form-control" formControlName="numOfPages" id="numOfPages">
-									</div>
-
-									<button type="submit" class="btn btn-primary float-right" ng-click="editBookModelClose();">Submit</button>
-									<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default float-right mar-right" ng-click="editBookModelClose();">Close</button>
-								</form>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
 
 			    <div id="getBookModal" class="modal" tabindex="-1" role="dialog">
 			        <div class="modal-dialog" role="document">

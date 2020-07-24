@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { Router, Routes } from "@angular/router";
 import { ApiService } from  '../api.service';
@@ -9,6 +9,7 @@ import { NotificationsService } from 'angular2-notifications';
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css']
 })
+
 export class BooksComponent implements OnInit {
 
 	constructor(public apiService: ApiService, public router: Router, public formBuilder: FormBuilder, public service: NotificationsService) { }
@@ -59,13 +60,13 @@ export class BooksComponent implements OnInit {
 					timeOut: 500,
 					animate: 'fade',
 					showProgressBar: true
-				}, this.router.navigateByUrl('/book')) 
+				}) 
 				: this.service.success('Success', res.message, {
 					position: ["top", "left"],
 					timeOut: 500,
 					animate: 'fade',
 					showProgressBar: true
-				}, this.router.navigateByUrl('/book')),
+				}),
 				(err) => this.service.error('Error', err.error.message, {
 					position: ["top", "left"],
 					timeOut: 1000,
@@ -101,5 +102,9 @@ export class BooksComponent implements OnInit {
 				}, this.router.navigateByUrl('/book'))
 			);
 		}
+	}
+
+	addBookModelClose() {
+		alert('sd');
 	}
 }

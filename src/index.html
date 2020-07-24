@@ -24,7 +24,7 @@
   <script src="assets/js/translations.js"></script>
   <script type="text/javascript">
 		var app = angular.module('ngclickApp', []);
-		app.controller('ngclickCtrl', function ($scope, $http, $compile, $filter, $location, $window) {
+		app.controller('ngclickCtrl', function ($scope, $http, $compile, $filter, $location, $window, $interval) {
 
 			$scope.books = [];
 			$scope.selected = 0;
@@ -38,11 +38,10 @@
 					angular.forEach(new_books, function (value, key) {
 						$scope.books.push({"id": value.id, "isbn": value.isbn, "title": value.title, "publisher": value.publisher, "numOfPages": value.numOfPages, "author": value.author});
 					});
-
 					angular.forEach($scope.books, function (value) {
 						if(value != undefined || value != '') {
 							var Book_HTML = '<div class="col-md-4 mar-bottom">'
-							   	Book_HTML += '<div class="card">'
+							   	Book_HTML += '<div class="card" id="'+value.id+'">'
 							    Book_HTML += '<div class="card-body">'
 								Book_HTML += '<h5 class="card-title">'+value.title+'</h5>'
 								Book_HTML += '<h6 class="card-subtitle mb-2 text-muted">'+value.isbn+'</h6>'
@@ -51,7 +50,7 @@
 								Book_HTML += '<div>Number Of Pages: '+value.numOfPages+'</div>'
 								Book_HTML += '<button types="button" class="btn btn-info mar-all" ng-click="getBookDetails(\''+value.id+'\');">View</button>'
 								Book_HTML += '<button types="button" class="btn btn-primary mar-all" ng-click="UpdateBookDetails(\''+value.id+'\');">Edit</button>'
-								Book_HTML += '<button type="button" class="btn btn-danger mar-all" ng-click="DeleteBookDetails(\''+value.id+'\');">Delete</button>'
+								Book_HTML += '<button type="button" class="btn btn-danger mar-all" data-id="'+value.id+'" ng-click="DeleteBookDetails(\''+value.id+'\');">Delete</button>'
 								Book_HTML += '</div>'
 								Book_HTML += '</div>'
 								Book_HTML += '</div>';
@@ -89,7 +88,6 @@
 				var url = $scope.url+"book/"+id;
 				$http.get(url).then(function(response){
 					var book_details = response.data.data;
-					console.log(response);
 					if(book_details != undefined || book_details != '') {
 						var date_string = book_details.publish_date;
 						$("#isbn").val(book_details.isbn);
@@ -107,7 +105,7 @@
 				$http.delete(url).then(function(response){
 					var book_details = response.data.data;
 					if(book_details != undefined || book_details != '') {
-						$window.location.href = $scope.baseURL;
+						$("div").find("div #"+id).remove();
 					}
 				});
 			}
@@ -116,13 +114,29 @@
 				$("#addBookModal").modal("show");
 			}
 
+			$scope.addBookModelClose = function (){
+				if($("#add_isbn").val() != '' && $("#add_title").val() != '' && $("#add_title").val() != '' && $("#add_author").val() != '' && $("#add_publish_date").val() != '' && $("#add_publisher").val() != '' && $("#add_numOfPages").val() != '') {
+					$("#addBookModal").modal("hide");
+				}
+			}
+
       		$scope.editBookModelOpen = function (){
 				$("#editBookModal").modal("show");
 			}
 
 			$scope.editBookModelClose = function (){
-				$("#editBookModal").modal("hide");
+				if($("#isbn").val() != '' && $("#title").val() != '' && $("#title").val() != '' && $("#author").val() != '' && $("#publish_date").val() != '' && $("#publisher").val() != '' && $("#numOfPages").val() != '') {
+					$("#editBookModal").modal("hide");
+				} else if(($("#publish_date").val() == '')) {
+					alert('Please enter publish_date');
+				}
 			}
+
+
+
+			$interval(function(){
+				// $scope.getBooks();
+			}, 1000)
 		});
 	</script>
 </body>

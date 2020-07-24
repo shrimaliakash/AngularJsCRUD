@@ -9,6 +9,8 @@ import { BooksComponent } from './books/books.component';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [],
