@@ -90,6 +90,7 @@
 					var book_details = response.data.data;
 					if(book_details != undefined || book_details != '') {
 						var date_string = book_details.publish_date;
+						$("#id").val(id);
 						$("#isbn").val(book_details.isbn);
 						$("#title").val(book_details.title);
 						$("#author").val(book_details.author);
@@ -117,7 +118,7 @@
 			$scope.addBookModelClose = function (){
 				if($("#add_isbn").val() != '' && $("#add_title").val() != '' && $("#add_title").val() != '' && $("#add_author").val() != '' && $("#add_publish_date").val() != '' && $("#add_publisher").val() != '' && $("#add_numOfPages").val() != '') {
 					$("#addBookModal").modal("hide");
-					var id = '20';
+					
 					var isbn = $("#add_isbn").val();
 					var title = $("#add_title").val();
 					var author = $("#add_author").val();
@@ -134,8 +135,7 @@
 					};
 					var url = $scope.url+"book";
 					$http.post(url, data).then(function(response){
-						console.log(response);
-						
+						var id = response.data.Inserted;
 						var New_Book_HTML = '<div class="col-md-4 mar-bottom">'
 						   	New_Book_HTML += '<div class="card" id="'+id+'">'
 						    New_Book_HTML += '<div class="card-body">'
@@ -162,33 +162,28 @@
 
 			$scope.editBookModelClose = function (){
 				if($("#isbn").val() != '' && $("#title").val() != '' && $("#author").val() != '' && $("#publish_date").val() != '' && $("#publisher").val() != '' && $("#numOfPages").val() != '') {
-					var id = '20';
 					var isbn = $("#isbn").val();
 					var title = $("#title").val();
 					var author = $("#author").val();
 					var publish_date = $("#publish_date").val();
 					var publisher = $("#publisher").val();
 					var numOfPages = $("#numOfPages").val();
-
-					var New_Book_HTML = '<div class="col-md-4 mar-bottom">'
-					   	New_Book_HTML += '<div class="card" id="'+id+'">'
-					    New_Book_HTML += '<div class="card-body">'
-						New_Book_HTML += '<h5 class="card-title">'+title+'</h5>'
-						New_Book_HTML += '<h6 class="card-subtitle mb-2 text-muted">'+isbn+'</h6>'
-						New_Book_HTML += '<div>Author: '+author+'</div>'
-						New_Book_HTML += '<div>Publisher: '+publisher+'</div>'
-						New_Book_HTML += '<div>Number Of Pages: '+numOfPages+'</div>'
-						New_Book_HTML += '<button types="button" class="btn btn-info mar-all" ng-click="getBookDetails(\''+id+'\');">View</button>'
-						New_Book_HTML += '<button types="button" class="btn btn-primary mar-all" ng-click="UpdateBookDetails(\''+id+'\');">Edit</button>'
-						New_Book_HTML += '<button type="button" class="btn btn-danger mar-all" data-id="'+id+'" ng-click="DeleteBookDetails(\''+id+'\');">Delete</button>'
-						New_Book_HTML += '</div>'
-						New_Book_HTML += '</div>'
-						New_Book_HTML += '</div>';
-					var $role = $(New_Book_HTML).appendTo('#book');
-					$compile($role)($scope);
+					var id = $("#id").val();
+					var data = {
+						'isbn':isbn,
+						'title':title,
+						'author':author,
+						'publish_date':publish_date,
+						'publisher':publisher,
+						'numOfPages':numOfPages
+					};
+					var url = $scope.url+"book/"+id;
+					$http.post(url, data).then(function(response){
+						$("#book").html('');
+						$scope.books = [];
+						$scope.getBooks();
+					});
 					$("#editBookModal").modal("hide");
-				} else if(($("#publish_date").val() == '')) {
-					alert('Please enter publish_date');
 				}
 			}
 
