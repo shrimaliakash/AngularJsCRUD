@@ -44,39 +44,6 @@ export class BooksComponent implements OnInit {
 		});
 	}
 
-	createBook() {
-		if(this.addForm.status == 'INVALID'){
-		} else {
-			this.isSubmitted = true;
-			this.isbn = this.addForm.controls.isbn.value;
-			this.title = this.addForm.controls.title.value;
-			this.author = this.addForm.controls.author.value;
-			this.publish_date = this.addForm.controls.publish_date.value;
-			this.publisher = this.addForm.controls.publisher.value;
-			this.numOfPages = this.addForm.controls.numOfPages.value;
-			this.apiService.createBook(this.isbn, this.title, this.author, this.publish_date, this.publisher, this.numOfPages).subscribe(
-				(res) => res.success == false ? this.service.error('Error', res.message, {
-					position: ["top", "left"],
-					timeOut: 500,
-					animate: 'fade',
-					showProgressBar: true
-				}) 
-				: this.service.success('Success', res.message, {
-					position: ["top", "left"],
-					timeOut: 500,
-					animate: 'fade',
-					showProgressBar: true
-				}),
-				(err) => this.service.error('Error', err.error.message, {
-					position: ["top", "left"],
-					timeOut: 1000,
-					animate: 'fade',
-					showProgressBar: true
-				}, this.router.navigateByUrl('/book'))
-			);
-		}
-	}
-
 	updateBook() {
 		if(this.updateForm.status == 'INVALID'){
 		} else {
