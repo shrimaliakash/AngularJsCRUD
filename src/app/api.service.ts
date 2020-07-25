@@ -19,13 +19,6 @@ export class ApiService {
 	};
 
 	constructor(private httpClient: HttpClient) { }
-
-	createBook(isbn: string, title: string, author: string, publish_date: string, publisher: string, numOfPages: string) {
-		return this.httpClient.post(`${this.PHP_API_SERVER}/book`,{isbn,title, author,publish_date,publisher,numOfPages}, this.options)
-			.pipe(map((response: any) =>
-				response
-		));
-	}
 	
 	updateBook(isbn: string, title: string, author: string, publish_date: string, publisher: string, numOfPages: string) {
 		var id = localStorage.getItem('id');
