@@ -160,7 +160,7 @@
 				$("#editBookModal").modal("show");
 			}
 
-			$scope.editBookModelClose = function (){
+			$scope.editBook = function (){
 				if($("#isbn").val() != '' && $("#title").val() != '' && $("#author").val() != '' && $("#publish_date").val() != '' && $("#publisher").val() != '' && $("#numOfPages").val() != '') {
 					var isbn = $("#isbn").val();
 					var title = $("#title").val();
@@ -186,7 +186,10 @@
 					$("#editBookModal").modal("hide");
 				}
 			}
-
+			
+			$scope.editBookModelClose = function (){
+				$("#editBookModal").modal("hide");
+			}
 
 
 			$interval(function(){
