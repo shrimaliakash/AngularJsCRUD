@@ -71,7 +71,12 @@
 					var book_details = response.data.data;
 					if(book_details != undefined || book_details != '') {
 						var date_string = book_details.publish_date;
-						var publish_date = date_string.split('T')[0];
+						console.log(date_string);
+						var publish_date = new Date(date_string.split('T')[0]);
+						console.log(publish_date);
+						var publish_date = new Date(publish_date.getFullYear(),publish_date.getMonth(),publish_date.getDate()+1);
+						console.log(publish_date);
+						publish_date = new Date(publish_date.split('T')[0]);
 						$("#isbn_get").html(book_details.isbn);
 						$("#title_get").html(book_details.title);
 						$("#author_get").html(book_details.author);
@@ -153,6 +158,27 @@
 						var $role = $(New_Book_HTML).appendTo('#book');
 						$compile($role)($scope);
 					});
+				} else {
+					if($("#add_isbn").val() == '') {
+						$("#add_isbn_error").css('display','inline');
+					} else if($("#add_title").val() == '') {
+						$("#add_isbn_error").css('display','none');
+						$("#add_title_error").css('display','inline');
+					} else if($("#add_author").val() == '') {
+						$("#add_title_error").css('display','none');
+						$("#add_author_error").css('display','inline');
+					} else if($("#add_publish_date").val() == '') {
+						$("#add_author_error").css('display','none');
+						$("#add_publish_date_error").css('display','inline');
+					} else if($("#add_publisher").val() == '') {
+						$("#add_publish_date_error").css('display','none');
+						$("#add_publisher_error").css('display','inline');
+					} else if($("#add_numOfPages").val() == '') {
+						$("#add_publisher_error").css('display','none');
+						$("#add_numOfPages_error").css('display','inline');
+					} else {
+						$("#add_numOfPages_error").css('display','none');
+					}
 				}
 			}
 
@@ -184,6 +210,27 @@
 						$scope.getBooks();
 					});
 					$("#editBookModal").modal("hide");
+				} else {
+					if($("#isbn").val() == '') {
+						$("#isbn_error").css('display','inline');
+					} else if($("#title").val() == '') {
+						$("#isbn_error").css('display','none');
+						$("#title_error").css('display','inline');
+					} else if($("#author").val() == '') {
+						$("#title_error").css('display','none');
+						$("#author_error").css('display','inline');
+					} else if($("#publish_date").val() == '') {
+						$("#author_error").css('display','none');
+						$("#publish_date_error").css('display','inline');
+					} else if($("#publisher").val() == '') {
+						$("#publish_date_error").css('display','none');
+						$("#publisher_error").css('display','inline');
+					} else if($("#numOfPages").val() == '') {
+						$("#publisher_error").css('display','none');
+						$("#numOfPages_error").css('display','inline');
+					} else {
+						$("#numOfPages_error").css('display','none');
+					}
 				}
 			}
 			
