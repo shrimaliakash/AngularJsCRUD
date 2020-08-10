@@ -70,13 +70,7 @@
 				$http.get(url).then(function(response){
 					var book_details = response.data.data;
 					if(book_details != undefined || book_details != '') {
-						var date_string = book_details.publish_date;
-						console.log(date_string);
-						var publish_date = new Date(date_string.split('T')[0]);
-						console.log(publish_date);
-						var publish_date = new Date(publish_date.getFullYear(),publish_date.getMonth(),publish_date.getDate()+1);
-						console.log(publish_date);
-						publish_date = new Date(publish_date.split('T')[0]);
+						var publish_date = convert(book_details.publish_date);
 						$("#isbn_get").html(book_details.isbn);
 						$("#title_get").html(book_details.title);
 						$("#author_get").html(book_details.author);
@@ -85,6 +79,13 @@
 						$("#numOfPages_get").html(book_details.numOfPages);
 					}
 				});
+			}
+
+			function convert(str) {
+			    var date = new Date(str),
+			        month = ("0" + (date.getMonth()+1)).slice(-2),
+			        day  = ("0" + date.getDate()).slice(-2);
+			    return [ date.getFullYear(), month, day ].join("-");
 			}
 
 			$scope.UpdateBookDetails = function (id){
